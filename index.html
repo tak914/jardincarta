@@ -95,11 +95,12 @@ canvas{display:block}
 50%{transform:translate(var(--tx,0px),calc(var(--ty,0px) - 14px)) rotate(calc(var(--rot,0deg) + 5deg))}
 100%{transform:translate(calc(var(--tx,0px) * -0.5),calc(var(--ty,0px) + 12px)) rotate(calc(var(--rot,0deg) - 4deg))}
 }
-#end{line-height:1.5;font-size:1.05rem;overflow-x:hidden;overflow-y:auto;justify-content:flex-start}
-#et{margin-top:auto;font-weight:bold;color:var(--hl);font-size:1.2rem;min-height:1.4em}
-#paper{width:min(88vw,30em);border-radius:4px;transition:box-shadow 1s}
-#paper.whole{box-shadow:0 8px 30px rgba(74,36,51,.25)}
-#again{margin-bottom:auto}
+#end{line-height:1.65;font-size:1.05rem;overflow-x:hidden;overflow-y:auto;justify-content:flex-start;background:radial-gradient(ellipse at center,rgba(255,240,248,.96) 0%,rgba(225,235,255,.95) 100%);padding:25px 12px 40px}
+#et{margin-top:auto;font-weight:bold;color:var(--hl);font-size:1.25rem;min-height:1.4em;letter-spacing:.02em}
+#paper{width:min(90vw,540px);background:#fffdf9;border-radius:16px;box-shadow:0 12px 35px rgba(74,36,51,.18);border:2px solid #f3d1df;padding:26px 28px;text-align:left;color:#3d202d;box-sizing:border-box;margin:12px auto;transition:box-shadow .8s,transform .8s}
+#paper.whole{box-shadow:0 16px 45px rgba(230,73,128,.28),0 0 25px rgba(255,225,238,.65);border-color:#e64980}
+#paper-body{white-space:pre-wrap;line-height:1.75;font-size:1.02rem;font-family:Georgia,"Times New Roman",serif}
+#again{margin-bottom:auto;margin-top:10px}
 .pz{background:#fffaf0;color:var(--fg);padding:16px 20px;margin-bottom:10px;white-space:pre-wrap;text-align:center;opacity:0;filter:blur(7px);transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.5);clip-path:polygon(0 0,18% 4%,38% 0,58% 5%,80% 1%,100% 4%,100% 100%,82% 95%,60% 100%,40% 96%,20% 100%,0 95%);transition:transform .9s cubic-bezier(.2,.9,.3,1.15),opacity .5s,filter 1.4s,margin .9s,clip-path .9s}
 .pz.in{opacity:1;transform:none}
 #paper.whole .pz{filter:none;margin-bottom:0;clip-path:polygon(0 0,18% 0,38% 0,58% 0,80% 0,100% 0,100% 100%,82% 100%,60% 100%,40% 100%,20% 100%,0 100%)}
@@ -136,7 +137,7 @@ label.f{background:var(--box);padding:10px 16px;border-radius:12px;font-size:.95
 <div id="devHead"><b>🛠️ Modo Desarrollador</b><span id="devCloseBtn" title="Cerrar panel">✕</span></div>
 <div class="devRow"><span class="devLbl">Mariposas:</span><button class="devBtn" onclick="devSetStage(0)">0</button><button class="devBtn" onclick="devSetStage(1)">1</button><button class="devBtn" onclick="devSetStage(2)">2</button><button class="devBtn" onclick="devSetStage(3)">3</button><button class="devBtn" onclick="devSetStage(4)">4</button><button class="devBtn" onclick="devSetStage(5)">5 (Todas)</button></div>
 <div class="devRow"><span class="devLbl">Corazones:</span><button class="devBtn" onclick="devAddHeart()">+1 ♥</button><button class="devBtn" onclick="devSetHearts(4)">4/10 (Color 100%)</button><button class="devBtn" onclick="devSetHearts(9)">9/10 ♥</button><button class="devBtn" onclick="devSetHearts(10)">10/10 ♥ (Todos)</button><button class="devBtn" onclick="devSetHearts(0)">0 ♥</button></div>
-<div class="devRow"><span class="devLbl">Teleport:</span><button class="devBtn" onclick="devTeleport(24,5,'Colina / Árbol')">📍 Colina</button><button class="devBtn" onclick="devTeleport(33,16,'Cofre Secreto')">📍 Cofre</button><button class="devBtn" onclick="devTeleport(-21,-8,'Laberinto')">📍 Laberinto</button><button class="devBtn" onclick="devTeleport(0,0,'Inicio')">📍 Inicio</button></div>
+<div class="devRow"><span class="devLbl">Teleport:</span><button class="devBtn" onclick="devTeleport(24,5,'Colina / Árbol')">📍 Colina</button><button class="devBtn" onclick="devTeleport(streamX(1.5),1.5,'Puente Central')">📍 P. Central</button><button class="devBtn" onclick="devTeleport(streamX(-15),-15,'Puente Sur')">📍 P. Sur</button><button class="devBtn" onclick="devTeleport(streamX(16),16,'Puente Norte')">📍 P. Norte</button><button class="devBtn" onclick="devTeleport(33,16,'Cofre Secreto')">📍 Cofre</button><button class="devBtn" onclick="devTeleport(-21,-8,'Laberinto')">📍 Laberinto</button></div>
 <div class="devRow"><span class="devLbl">Directo a:</span><button class="devBtn" onclick="run=false;openPuzzle()">🧩 Puzzle</button><button class="devBtn" onclick="run=false;openChest()">🎁 Cofre</button><button class="devBtn" onclick="run=false;showLetter()">📜 Carta</button></div>
 <div id="devHelp">Atajos: <b>[F2]</b> o <b>[Ctrl+Shift+D]</b> panel · <b>[1-5]</b> Mariposas · <b>[H]</b> +1 Corazón · <b>[0]</b> 10 Corazones · <b>[T]</b> Colina · <b>[P]</b> Puzzle · <b>[G]</b> Regalos Cofre · <b>[L]</b> Carta</div>
 </div>
@@ -205,17 +206,33 @@ var MEMORIAS=[
 "♥ Nuestro secreto mejor guardado.\nEscribí algo que solo ustedes dos entiendan.",
 "♥ Una última promesa.\nEscribí lo que siempre vas a cuidar de ustedes."];
 // La carta se parte en pedazos: tiene que haber la misma cantidad que MEMORIAS (10).
+// Carta completa escrita por Santino para Luasnita
+var CARTA_COMPLETA=`Hola Luasnita,
+
+Si estás leyendo esto, es porque lograste encontrar todas las partes y ganar el juego. Capaz te pareció una locura, pero ya sabés cómo soy... a veces me cuesta un montón encontrar las palabras exactas para decir lo que siento frente a frente. Así que me pareció que ponerme a programar esto y armarte este jueguito era la forma más sincera (y a mi estilo) de demostrarte algo que ya no me quería guardar más: te quiero muchísimo.
+
+La verdad es que en este último tiempo te estuve pensando un montón y te extraño. Extraño nuestras charlas sobre cualquier cosa, los momentos que compartimos y esa forma de ser tan tuya que siempre me hace sentir bien. Me di cuenta de que sos una persona súper especial para mí y que, en mi día a día, me hace falta esa energía tan linda que tenés y que contagia.
+
+A veces las cosas se complican o uno toma distancia sin quererlo realmente, pero quería que supieras que sos importante para mí. Espero que estés muy bien, que te haya gustado este detalle y que te hayas divertido al menos un ratito; lo hice pensando en vos.
+
+Me encantaría saber cómo andás y que charlemos un rato cuando tengas ganas.
+
+Un abrazo enorme,
+
+Santino`;
+
 var CARTA_PARTES=[
-"Querida NOMBRE,",
-"Juntaste todos los corazones,\ny en realidad ya tenías el mío.",
-"Escribí acá el pedazo 3.\nContale lo que sentiste cuando la conociste.",
-"Escribí acá el pedazo 4.\nDecile lo que más te gusta de ella.",
-"Escribí acá el pedazo 5.\nRecordale una anécdota que los haga reír.",
-"Escribí acá el pedazo 6.\nContale por qué es especial para vos.",
-"Escribí acá el pedazo 7.\nHablale de lo que soñás para los dos.",
-"Escribí acá el pedazo 8.\nSumale un detalle especial de ustedes.",
-"Escribí acá el pedazo 9.\nEscribí una promesa antes del final.",
-"Te quiero ♥\n— Firmá acá"];
+"Hola Luasnita,",
+"Si estás leyendo esto, es porque lograste encontrar todas las partes y ganar el juego.",
+"A veces me cuesta un montón encontrar las palabras exactas para decir lo que siento frente a frente.",
+"Ponerme a programar esto y armarte este jueguito era la forma más sincera de demostrarte algo: te quiero muchísimo.",
+"En este último tiempo te estuve pensando un montón y te extraño. Extraño nuestras charlas y esa forma de ser tan tuya.",
+"Sos una persona súper especial para mí y me hace falta esa energía tan linda que tenés y que contagia.",
+"A veces las cosas se complican o uno toma distancia sin quererlo realmente, pero sos muy importante para mí.",
+"Espero que te haya gustado este detalle y que te hayas divertido al menos un ratito; lo hice pensando en vos.",
+"Me encantaría saber cómo andás y que charlemos un rato cuando tengas ganas.",
+"Un abrazo enorme,\nSantino ♥"
+];
 var HISTORIA=[
 "Cap. I · El susurro inicial: El primer fragmento despierta. El jardín empieza a recordar su color…",
 "Cap. II · Ecos sobre el arroyo: Las mariposas aún recuerdan tu nombre entre los puentes.",
@@ -328,19 +345,57 @@ var sMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{u
 vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
 fragmentShader:'uniform float uT;varying vec2 vUv;void main(){float edge=smoothstep(0.,.18,vUv.x)*smoothstep(1.,.82,vUv.x);float w=sin(vUv.y*12.-uT*3.2+sin(vUv.x*8.)*1.2)*.5+.5;float sp=smoothstep(.75,.98,sin(vUv.y*24.-uT*4.5+vUv.x*14.));vec3 c=mix(vec3(.28,.58,.86),vec3(.65,.88,1.),w*.55)+vec3(.9,.97,1.)*sp*.35;gl_FragColor=vec4(c,.78*edge);}'});
 grpWater.add(new THREE.Mesh(sGeo,sMat));
-// puentes sobre el arroyo
+// puentes sobre el arroyo (orientados cruzando perfectamente de orilla a orilla)
 var BRIDGES=[],bMat=new THREE.MeshLambertMaterial({color:0x8c5a3c}),rMat=new THREE.MeshLambertMaterial({color:0x6b4228}),stMat=new THREE.MeshLambertMaterial({color:0xb8aeb8});
-[-15,1.5,16].forEach(function(bz){var bx=streamX(bz),tan=(streamX(bz+.4)-streamX(bz-.4))/.8,ang=-Math.atan2(tan,1);
-var bg=new THREE.Group();bg.position.set(bx,.08,bz);bg.rotation.y=ang;
-var hw=2.85,hd=1.22,arch=.65;
-for(var i=-7;i<=7;i++){var lx=i*(hw/7.5),dy=arch*Math.cos((lx/hw)*1.5708);
-var plk=new THREE.Mesh(new THREE.BoxGeometry(.34,.12,hd*2),bMat);plk.position.set(lx,dy,0);plk.rotation.z=-Math.sin((lx/hw)*1.5708)*.22;bg.add(plk)}
-[-hd+.08,hd-.08].forEach(function(rz){for(var i=-3;i<=3;i++){var lx=i*(hw/3.2),dy=arch*Math.cos((lx/hw)*1.5708);
-var post=new THREE.Mesh(new THREE.CylinderGeometry(.06,.07,.75,6),rMat);post.position.set(lx,dy+.38,rz);bg.add(post);
-if(i<3){var nx=(i+1)*(hw/3.2),ndy=arch*Math.cos((nx/hw)*1.5708),mx=(lx+nx)/2,my=(dy+ndy)/2+.72,len=Math.hypot(nx-lx,ndy-dy);
-var rail=new THREE.Mesh(new THREE.BoxGeometry(len,.07,.07),rMat);rail.position.set(mx,my,rz);rail.rotation.z=Math.atan2(ndy-dy,nx-lx);bg.add(rail)}}});
-[-hw-.15,hw+.15].forEach(function(px){[-hd-.1,hd+.1].forEach(function(pz){var p2=new THREE.Mesh(new THREE.BoxGeometry(.35,.6,.35),stMat);p2.position.set(px,.15,pz);bg.add(p2)})});
-grpStruct.add(bg);BRIDGES.push({cx:bx,cz:bz,cos:Math.cos(-ang),sin:Math.sin(-ang),hw:hw,hd:hd,baseY:.14,arch:arch})});
+[
+{bz:1.5, rotAdj:0.26},      // Puente central: girado a la izquierda (alineado con la orilla hacia el mirador)
+{bz:-15, rotAdj:0.48},      // Puente sur: alineado
+{bz:16,  rotAdj:-0.32}      // Puente norte: alineado
+].forEach(function(bInfo){
+var bz=bInfo.bz;
+var bx=streamX(bz),tan=(streamX(bz+.4)-streamX(bz-.4))/.8;
+var ang=Math.atan2(-tan,1) + (bInfo.rotAdj||0);
+var hw=4.4,hd=1.35,arch=.65;
+var cosA=Math.cos(ang),sinA=Math.sin(ang);
+var hL=H(bx-hw*cosA,bz-hw*sinA),hR=H(bx+hw*cosA,bz+hw*sinA);
+// Base asentada a ras de orilla para que los extremos queden bien clavados en la tierra
+var baseY=(hL+hR)/2 - .18;
+var bg=new THREE.Group();bg.position.set(bx,baseY,bz);bg.rotation.y=ang;
+
+// Tablones arqueados que van de una orilla a la otra adentrándose en el suelo
+for(var i=-11;i<=11;i++){
+var lx=i*(hw/11.5),dy=arch*Math.cos((lx/hw)*1.5708);
+var plk=new THREE.Mesh(new THREE.BoxGeometry(.36,.14,hd*2),bMat);
+plk.position.set(lx,dy,0);
+plk.rotation.z=-Math.sin((lx/hw)*1.5708)*.24;
+bg.add(plk);
+}
+// Barandas y postes protectores
+[-hd+.08,hd-.08].forEach(function(rz){
+for(var i=-5;i<=5;i++){
+var lx=i*(hw/5.2),dy=arch*Math.cos((lx/hw)*1.5708);
+var post=new THREE.Mesh(new THREE.CylinderGeometry(.065,.08,.82,6),rMat);
+post.position.set(lx,dy+.41,rz);bg.add(post);
+if(i<5){
+var nx=(i+1)*(hw/5.2),ndy=arch*Math.cos((nx/hw)*1.5708);
+var mx=(lx+nx)/2,my=(dy+ndy)/2+.76,len=Math.hypot(nx-lx,ndy-dy);
+var rail=new THREE.Mesh(new THREE.BoxGeometry(len,.08,.08),rMat);
+rail.position.set(mx,my,rz);rail.rotation.z=Math.atan2(ndy-dy,nx-lx);bg.add(rail);
+}
+}
+});
+// Pilares de piedra anclados en profundidad dentro de la tierra firme
+[-hw-.05,hw+.05].forEach(function(px,pi){
+var sideY=(pi===0?hL:hR)-baseY;
+[-hd-.1,hd+.1].forEach(function(pz){
+var p2=new THREE.Mesh(new THREE.BoxGeometry(.48,Math.max(1.4,Math.abs(sideY)+1.1),.48),stMat);
+p2.position.set(px,sideY*.5-.25,pz);bg.add(p2);
+});
+});
+grpStruct.add(bg);
+// cos y sin de la rotación mundial para proyectar la posición exacta del jugador sobre el puente
+BRIDGES.push({cx:bx,cz:bz,cos:cosA,sin:sinA,hw:hw,hd:hd,baseY:baseY,arch:arch});
+});
 // helpers de viento y obstáculos
 function sway(m,ex,key){m.onBeforeCompile=function(sh){sh.uniforms.uT=U;sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nuniform float uT;').replace('#include <begin_vertex>','#include <begin_vertex>\ntransformed.x+=sin(uT*1.6+instanceMatrix[3].x*.6+instanceMatrix[3].z*.45)*('+ex+');')};m.customProgramCacheKey=function(){return key}}
 var OBS=[],d=new THREE.Object3D(),cc=new THREE.Color();
@@ -1118,13 +1173,32 @@ $('cclose').onclick=function(){$('chest').classList.add('hide');run=true};
 $('openChestBtn').onclick=function(){if(!CHEST||!CHEST.revealed)return;$('openChestBtn').classList.add('hide');
 if(!CHEST.open){CHEST.open=true;chime();for(var q=0;q<35;q++)emit(CHEST.x,CHEST.y+1.1,CHEST.z,rnd(-2.5,2.5),rnd(1,4),rnd(-2.5,2.5),1,.85,.35)}
 run=false;openChest()};
-function showLetter(){var bx=$('paper');bx.className='';bx.innerHTML='';$('et').textContent='📜 El viento te devuelve los pedazos…';$('again').classList.add('hide');$('end').scrollTop=0;
-CARTA_PARTES.forEach(function(t,i){var d=document.createElement('div');d.className='pz';d.style.setProperty('--r',rnd(-16,16)+'deg');d.style.setProperty('--x',rnd(-110,110)+'px');d.style.setProperty('--y',rnd(-180,180)+'px');d.textContent=t.replace(/NOMBRE/g,name);bx.appendChild(d);
-setTimeout(function(){d.classList.add('in');if(AC)note(PE[i%6],1.3,.1)},500+i*650)});
-var tw=500+CARTA_PARTES.length*650+700;
-setTimeout(function(){bx.classList.add('whole');$('et').textContent='Tu carta, completa ♥';chime()},tw);
-setTimeout(function(){$('again').classList.remove('hide')},tw+2200);
-$('end').classList.remove('hide')}
+function showLetter(){
+var bx=$('paper');bx.className='';bx.innerHTML='';
+$('et').textContent='📜 El viento te devuelve los pedazos…';
+$('again').classList.add('hide');$('end').scrollTop=0;
+CARTA_PARTES.forEach(function(t,i){
+var d=document.createElement('div');
+d.className='pz';
+d.style.setProperty('--r',rnd(-12,12)+'deg');
+d.style.setProperty('--x',rnd(-90,90)+'px');
+d.style.setProperty('--y',rnd(-140,140)+'px');
+d.textContent=t;
+bx.appendChild(d);
+setTimeout(function(){d.classList.add('in');if(AC)note(PE[i%6],1.3,.1)},400+i*550);
+});
+var tw=400+CARTA_PARTES.length*550+600;
+setTimeout(function(){
+bx.classList.add('whole');
+$('et').textContent='Tu carta, completa ♥';
+chime();
+setTimeout(function(){
+bx.innerHTML='<div id="paper-body">'+CARTA_COMPLETA+'</div>';
+},650);
+},tw);
+setTimeout(function(){$('again').classList.remove('hide')},tw+1800);
+$('end').classList.remove('hide');
+}
 function start(){CH2.forEach(function(c){c.v=0});visited={};drawCh();BF.forEach(function(b){b.f=false});BFS=0;stage=0;terrT=0;heartWakeT=0;quizDone=false;cutsceneT=0;wakeRing.visible=false;wakeOrbs.forEach(function(o){scene.remove(o.m)});wakeOrbs=[];got=0;vy=0;jumps=0;HEAL.value=0;GUIDE.hintT=0;
 BUDS.forEach(function(bd){bd.open=false;bd.m.visible=false;bd.m.geometry=budGeo;bd.m.scale.setScalar(1);bd.m.material.emissive.setHex(0x220814)});
 REC_PLATS.forEach(function(rp){rp.g.visible=false});TRAIL.forEach(function(tr){tr.life=0;tr.g.visible=false});
@@ -1195,8 +1269,17 @@ if(mv&&Math.random()<.7)emit(P.x+rnd(-.2,.2),P.y+.25,P.z+rnd(-.2,.2),rnd(-.3,.3)
 var sup=stage>=1?H(P.x,P.z)*terrT:0;
 if(stage>=4&&vy<=0&&Math.hypot(P.x-GZ.x,P.z-GZ.z)<.88&&P.y>=GZ.y+1.5)sup=Math.max(sup,GZ.y+1.92);
 if(stage>=3)for(var i=0;i<REC_PLATS.length;i++){var rp=REC_PLATS[i];if(vy<=0&&rp.top>sup&&rp.top<=P.y+.35&&Math.hypot(P.x-rp.x,P.z-rp.z)<rp.r)sup=rp.top}
-if(stage>=4){for(var i=0;i<BRIDGES.length;i++){var b=BRIDGES[i],bx2=P.x-b.cx,bz2=P.z-b.cz,lx2=bx2*b.cos-bz2*b.sin,lz2=bx2*b.sin+bz2*b.cos;
-if(Math.abs(lx2)<b.hw&&Math.abs(lz2)<b.hd){var dy=b.baseY+b.arch*Math.cos((lx2/b.hw)*1.5708);if(P.y>=dy-.55&&dy>sup)sup=dy}}
+// Colisión precisa con los puentes de madera arqueados
+if(stage>=4){
+for(var i=0;i<BRIDGES.length;i++){
+var b=BRIDGES[i],bx2=P.x-b.cx,bz2=P.z-b.cz;
+var lx2=bx2*b.cos-bz2*b.sin;
+var lz2=bx2*b.sin+bz2*b.cos;
+if(Math.abs(lx2)<b.hw&&Math.abs(lz2)<b.hd){
+var dy=b.baseY+b.arch*Math.cos((lx2/b.hw)*1.5708)+.08;
+if(P.y>=dy-.85&&dy>sup)sup=dy;
+}
+}
 for(var i=0;i<plats.length;i++){var p=plats[i];if(!p.gone&&vy<=0&&p.top>sup&&p.top<=P.y+.35&&Math.hypot(P.x-p.x,P.z-p.z)<p.r){sup=p.top;standP=p}}}
 if(P.y<=sup){P.y=sup;vy=0;grounded=true;jumps=0;
 if(stage>=1&&mv&&streamDist(P.x,P.z)<1.9&&P.y<-.15)emit(P.x+rnd(-.25,.25),-.22,P.z+rnd(-.25,.25),rnd(-.8,.8),rnd(1.2,2.8),rnd(-.8,.8),.6,.85,1);
