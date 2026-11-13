@@ -283,29 +283,30 @@ var MEMORIAS=[
 // Carta completa escrita por Santino para Luasnita
 var CARTA_COMPLETA=`Hola Luasnita,
 
-Si estás leyendo esto, es porque lograste encontrar todas las partes y ganar el juego. Capaz te pareció una locura, pero ya sabés cómo soy... a veces me cuesta un montón encontrar las palabras exactas para decir lo que siento frente a frente. Así que me pareció que ponerme a programar esto y armarte este jueguito era la forma más sincera (y a mi estilo) de demostrarte algo que ya no me quería guardar más: te quiero muchísimo.
+Si estás leyendo esto, es porque lograste encontrar todas las partes y ganar el juego. A veces me cuesta un montón expresarme y encontrar las palabras exactas para decir lo que siento frente a frente. Así que me pareció que programarte este jueguito era la forma más sincera (y a mi estilo) de demostrarte algo que ya no me quería guardar más: te quiero muchísimo.
 
-La verdad es que en este último tiempo te estuve pensando un montón y te extraño. Extraño nuestras charlas sobre cualquier cosa, los momentos que compartimos y esa forma de ser tan tuya que siempre me hace sentir bien. Me di cuenta de que sos una persona súper especial para mí y que, en mi día a día, me hace falta esa energía tan linda que tenés y que contagia.
+La verdad es que en este último tiempo te estuve pensando un montón y te extraño. Extraño nuestras charlas sobre cualquier cosa, los momentos que compartimos y esa forma de ser tan tuya. Me di cuenta de que sos una persona súper especial para mí y que, en mi día a día, me hace falta esa energía tan linda que tenés y que contagia.
 
 A veces las cosas se complican o uno toma distancia sin quererlo realmente, pero quería que supieras que sos importante para mí. Espero que estés muy bien, que te haya gustado este detalle y que te hayas divertido al menos un ratito; lo hice pensando en vos.
+También te quería pedir que me tengas un poquito de paciencia. A veces mi cabeza da demasiadas vueltas, me cuesta hasta entenderme a mí mismo y es muy fácil que me sienta asfixiado o abrumado por las cosas. Cuando me pasa eso, me trabo o no sé cómo actuar.
 
 Me encantaría saber cómo andás y que charlemos un rato cuando tengas ganas.
 
-Un abrazo enorme,
+Besos,
 
 Santino`;
 
 var CARTA_PARTES=[
 "Hola Luasnita,",
 "Si estás leyendo esto, es porque lograste encontrar todas las partes y ganar el juego.",
-"A veces me cuesta un montón encontrar las palabras exactas para decir lo que siento frente a frente.",
-"Ponerme a programar esto y armarte este jueguito era la forma más sincera de demostrarte algo: te quiero muchísimo.",
+"A veces me cuesta un montón expresarme y encontrar las palabras exactas para decir lo que siento frente a frente.",
+"Programarte este jueguito era la forma más sincera (y a mi estilo) de demostrarte algo: te quiero muchísimo.",
 "En este último tiempo te estuve pensando un montón y te extraño. Extraño nuestras charlas y esa forma de ser tan tuya.",
 "Sos una persona súper especial para mí y me hace falta esa energía tan linda que tenés y que contagia.",
-"A veces las cosas se complican o uno toma distancia sin quererlo realmente, pero sos muy importante para mí.",
+"A veces las cosas se complican o uno toma distancia sin quererlo realmente, pero sos importante para mí.",
 "Espero que te haya gustado este detalle y que te hayas divertido al menos un ratito; lo hice pensando en vos.",
-"Me encantaría saber cómo andás y que charlemos un rato cuando tengas ganas.",
-"Un abrazo enorme,\nSantino ♥"
+"También te quería pedir que me tengas paciencia: a veces mi cabeza da vueltas y me siento abrumado o trabado.",
+"Me encantaría saber cómo andás y que charlemos un rato cuando tengas ganas.\n\nBesos,\nSantino ♥"
 ];
 var HISTORIA=[
 "Cap. I · El susurro inicial: El primer fragmento despierta. El jardín empieza a recordar su color…",
@@ -829,7 +830,7 @@ function openCandado(){
 
 function showStage5Modal(){
   var s5=$('stage5Modal');
-  $('s5bub').textContent="🦋✨ ¡Increíble, "+name+"!\n\nLograste reunir a las 5 mariposas guardianas y descifrar el candado secreto con nuestras fechas especiales.\n\nEl hechizo del viento empieza a ceder y 8 corazones brillantes acaban de despertar por todo el jardín. ¡Cada corazón custodia uno de los pedazos perdidos de la carta rota!\n\nRecorré los senderos, cruzá los puentes y superá los acertijos para recuperar cada fragmento. Cuando los tengas todos, llevalos a la Colina del Mirador para reconstruir la carta y leerla… 💌";
+  $('s5bub').textContent="Lograste reunir a las 5 mariposas guardianas y descifrar el candado secreto.\n\nEl hechizo del viento empieza a ceder y 10 corazones brillantes acaban de despertar por todo el jardín. ¡Cada corazón custodia uno de los pedazos perdidos de la carta rota!\n\nRecorré los senderos, cruzá los puentes y superá los acertijos para recuperar cada fragmento. Cuando los tengas todos, llevalos a la Colina del Mirador para reconstruir la carta y leerla… 💌";
   s5.style.opacity='1';
   s5.classList.remove('hide');
 }
@@ -1220,9 +1221,10 @@ pos.push({x:p2x,z:p2z,y:p2y+1.6,puz:2});
 // 9no corazón: Laberinto 8x8 de setos en la zona oeste expandida (-35, -8)
 var MX=-35,MZ=-8,MN2=8,MC=2.0,MW=MN2*MC,MY=H(MX,MZ);
 var mzMat=new THREE.MeshLambertMaterial({color:0x2d7a47});
+var MAZE_WALL_H=5.4;
 function addWall(cx,cz,wx,wz){
-var wm2=new THREE.Mesh(new THREE.BoxGeometry(wx,3.2,wz),mzMat);wm2.position.set(cx,MY+1.6,cz);pgrp.add(wm2);
-MAZE_WALLS.push({x0:cx-wx/2,x1:cx+wx/2,z0:cz-wz/2,z1:cz+wz/2,top:MY+3.2})}
+var wm2=new THREE.Mesh(new THREE.BoxGeometry(wx,MAZE_WALL_H,wz),mzMat);wm2.position.set(cx,MY+MAZE_WALL_H/2,cz);pgrp.add(wm2);
+MAZE_WALLS.push({x0:cx-wx/2,x1:cx+wx/2,z0:cz-wz/2,z1:cz+wz/2,top:MY+MAZE_WALL_H})}
 var xL=MX-MW/2,zT=MZ-MW/2;
 // generador determinista 8x8 (DFS + BFS para esconder el corazón en la celda más lejana)
 var mSeed=4217;function mRng(){mSeed=(mSeed*1664525+1013904223)>>>0;return mSeed/4294967296}
@@ -1242,9 +1244,9 @@ mVis[nr][nc]=1;stk.push([nr,nc])}
 addWall(MX,zT,MW+.4,.42);addWall(MX,zT+MW,MW+.4,.42);addWall(xL,MZ,.42,MW+.4);
 addWall(xL+MW,zT+MC*2,.42,MC*4);addWall(xL+MW,zT+MC*6.5,.42,MC*3);
 // arco de piedra en la entrada del laberinto
-var ar1=new THREE.Mesh(new THREE.CylinderGeometry(.2,.24,3.4,8),stMat);ar1.position.set(xL+MW,MY+1.7,zT+MC*4);
-var ar2=new THREE.Mesh(new THREE.CylinderGeometry(.2,.24,3.4,8),stMat);ar2.position.set(xL+MW,MY+1.7,zT+MC*5);
-var arTop=new THREE.Mesh(new THREE.BoxGeometry(.55,.4,MC+.5),stMat);arTop.position.set(xL+MW,MY+3.4,zT+MC*4.5);
+var ar1=new THREE.Mesh(new THREE.CylinderGeometry(.2,.24,MAZE_WALL_H+.2,8),stMat);ar1.position.set(xL+MW,MY+(MAZE_WALL_H+.2)/2,zT+MC*4);
+var ar2=new THREE.Mesh(new THREE.CylinderGeometry(.2,.24,MAZE_WALL_H+.2,8),stMat);ar2.position.set(xL+MW,MY+(MAZE_WALL_H+.2)/2,zT+MC*5);
+var arTop=new THREE.Mesh(new THREE.BoxGeometry(.55,.4,MC+.5),stMat);arTop.position.set(xL+MW,MY+MAZE_WALL_H+.2,zT+MC*4.5);
 pgrp.add(ar1,ar2,arTop);
 // muros internos
 for(var r=0;r<MN2-1;r++)for(var c=0;c<MN2;c++)if(mH[r][c])addWall(xL+(c+.5)*MC,zT+(r+1)*MC,MC+.36,.36);
