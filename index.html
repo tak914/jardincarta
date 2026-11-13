@@ -269,16 +269,17 @@ label.f{background:var(--box);padding:10px 16px;border-radius:12px;font-size:.95
 <script>
 // ====== PERSONALIZÁ ACÁ ======
 var MEMORIAS=[
-"♥ Nuestro primer encuentro.\nEscribí acá algo de ese día.",
-"♥ Nuestra primera salida.\nContá cómo fue.",
-"♥ Esa risa que me encanta.\nDecile qué pasó.",
-"♥ Ese lugar que es solo nuestro.\nContá por qué es especial.",
-"♥ Lo que más admiro de vos.\nDecíselo con tus palabras.",
-"♥ Ese abrazo que nunca olvido.\nRecordale ese momento.",
-"♥ Cada pequeño detalle tuyo.\nDecile qué te enamora.",
-"♥ Lo que sueño para los dos.\nEscribí ese deseo.",
-"♥ Nuestro secreto mejor guardado.\nEscribí algo que solo ustedes dos entiendan.",
-"♥ Una última promesa.\nEscribí lo que siempre vas a cuidar de ustedes."];
+"¡Vas bien! ❤️ Te faltan 9 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 8 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 7 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 6 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 5 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 4 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 3 corazones por encontrar.",
+"¡Vas bien! ❤️ Te faltan 2 corazones por encontrar.",
+"¡Vas bien! ❤️ ¡Solo te falta 1 corazón más!",
+"¡Excelente! ❤️ ¡Encontraste todos los corazones!"
+];
 // La carta se parte en pedazos: tiene que haber la misma cantidad que MEMORIAS (10).
 // Carta completa escrita por Santino para Luasnita
 var CARTA_COMPLETA=`Hola Luasnita,
@@ -692,7 +693,7 @@ var BF_MSGS=[
 '🦋 «Los hongos gigantes te hacen saltar altísimo, ¡probalos!»',
 '🦋 «Cuando juntes todos los corazones, volvé al Gazebo central.»',
 '🦋 «¡Me encanta tu compañía, NOMBRE! No nos detengamos.»',
-'🦋 «¿Probaste chapotear en los charcos? ¡Brillan con tus pasos!»',
+'🦋 «¿Probaste saltar en los charcos? ¡Brillan con tus pasos!»',
 '🦋 «¡Somos todo un equipo de mariposas cuidando tus recuerdos!»'
 ],bfMsgI=0;
 var REC_DEF=[
@@ -1133,7 +1134,7 @@ fragmentShader:'uniform float uT;uniform vec3 uPl;varying vec2 vW,vL;void main()
 var wgm=new THREE.CircleGeometry(1,40);wgm.rotateX(-Math.PI/2);
 PD.forEach(function(p){var m=new THREE.Mesh(wgm,wm);m.position.set(p.x,p.y+.05,p.z);m.scale.setScalar(p.r*.8);grpWater.add(m)});
 // minidesafíos
-var CH2=[{k:'bf',e:'🦋',t:'Hacerte amiga de 5 mariposas',n:5,v:0},{k:'pd',e:'💧',t:'Chapotear en 5 charcos',n:5,v:0},{k:'tw',e:'🗼',t:'Subir a la cima de una torre',n:1,v:0},{k:'jp',e:'⬆️',t:'Saltar 15 veces',n:15,v:0}],visited={},lx=0,lz=0;
+var CH2=[{k:'bf',e:'🦋',t:'Hacerte amiga de 5 mariposas',n:5,v:0},{k:'pd',e:'💧',t:'Saltar en 5 charcos',n:5,v:0},{k:'tw',e:'🗼',t:'Subir a la cima de una torre',n:1,v:0},{k:'jp',e:'⬆️',t:'Saltar 15 veces',n:15,v:0}],visited={},lx=0,lz=0;
 function drawCh(){$('chal').innerHTML=CH2.map(function(c){return (c.v>=c.n?'✅ ':'⬜ ')+c.e+' '+c.t+(c.n>1?' ('+c.v+'/'+c.n+')':'')}).join('<br>')}
 function chal(k,add,set){var c=CH2.filter(function(c){return c.k==k})[0];if(c.v>=c.n)return;c.v=set!==undefined?Math.max(c.v,set):c.v+add;if(c.v>=c.n){c.v=c.n;chime();for(var q=0;q<40;q++)emit(pl.position.x,pl.position.y+1.5,pl.position.z,rnd(-3,3),rnd(1,5),rnd(-3,3),1,.9,.4);say('⭐ ¡Desafío cumplido! '+c.t)}drawCh()}
 function updPud(dt){var P=pl.position,v2=Math.hypot(P.x-lx,P.z-lz)/Math.max(dt,.001);lx=P.x;lz=P.z;if(!run)return;
@@ -1975,8 +1976,8 @@ say('🦋 Mariposa guía: «¡Mirá! Cada fragmento que juntás se dirige hacia 
 if(AC){note(523.3,1.2,.15);setTimeout(function(){note(659.3,1.2,.15)},180);setTimeout(function(){note(784,1.4,.15)},360);setTimeout(function(){note(1046.5,2.0,.18)},560)}
 for(var q=0;q<35;q++)emit(GZ.x,GZ.y+1.9,GZ.z,rnd(-2.5,2.5),rnd(1,4),rnd(-2.5,2.5),1,.9,.4);
 }
-else if(got==N){gzBeacon.visible=true;gzRing.material.opacity=.85;say(HISTORIA[got-1]+'\n\n'+MEMORIAS[got-1]+'\n\n🦋 Mariposa guía: ¡Tenés los '+N+' pedazos! Seguime al Gran Árbol del Mirador para armar la carta.')}
-else{say(HISTORIA[got-1]+'\n\n'+MEMORIAS[got-1]+'\n\n📜 Pedazo '+got+' de '+N+(got==N-1?'\n…¡solo falta uno más!':''))}
+else if(got==N){gzBeacon.visible=true;gzRing.material.opacity=.85;say('✨ ¡Vas bien! ¡Conseguiste el último corazón! ('+N+'/'+N+')\n\n🦋 Mariposa guía: ¡Tenés todos los pedazos! Seguime a la Colina del Mirador para armar la carta.')}
+else{var rem=N-got;say('✨ ¡Vas bien! ❤️ Corazón '+got+' de '+N+'. '+(rem==1?'¡Solo te falta 1 corazón más!':'¡Te faltan '+rem+' corazones!'))}
 showPh(got-1);chime()}}
 var cp=Math.cos(camPitch);
 var targetCamDist=camDist;
